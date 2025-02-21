@@ -24,6 +24,10 @@ int puterTotal = 0;
 
 bool gameEnded;
 
+bool fuckYou;
+
+string winningPlayer;
+
 int randomNum(int lowerLim, int upperLim){
   int final = lowerLim + (rand() % upperLim);
   return final;
@@ -47,6 +51,8 @@ int rollDice(){
 
 int main() {
   srand((unsigned) time(NULL));
+
+  fuckYou = false;
   // what is this shit bru
   // idk antal sekunder sedan 1970 type shi
   cout << "Hello World!" << "\n";
@@ -56,18 +62,26 @@ int main() {
   cout << "How many players???? MAX: 10!!!" << endl;
   
   cin >> numberOfPlayers;
-  cout << "There are: " << numberOfPlayers << " players!" << endl;
-  cout << "Type player names" << endl;
-  for(int i = 0; i < numberOfPlayers; i++){
-    string name;
-    cin >> name;
-    playerNames[i] = name;
 
-  }
-  for(int i = 0; i < numberOfPlayers; i++){
-    cout << "Player " << i+1 << ": " << playerNames[i] << endl;
+  if(numberOfPlayers > 10 || numberOfPlayers < 1){
+    cout << "fuck you" << endl;
+    gameEnded = true;
+    fuckYou = true;
+  }else{
+    cout << "There are: " << numberOfPlayers << " players!" << endl;
+    cout << "Type player names" << endl;
+    for(int i = 0; i < numberOfPlayers; i++){
+      string name;
+      cin >> name;
+      playerNames[i] = name;
 
+    }
+    for(int i = 0; i < numberOfPlayers; i++){
+      cout << "Player " << i+1 << ": " << playerNames[i] << endl;
+
+    }
   }
+  
 
 
   //int val;
@@ -116,9 +130,27 @@ int main() {
     
   }
   cout << "Game Ended" << endl;
+  int currentHigh;
+  winningPlayer = playerNames[0];
+  currentHigh = playerTotal[0];
   for(int i = 0; i < numberOfPlayers; i++){
-    cout << playerNames[i] << "'s final score: " << playerTotal[i] << endl;
+    if(!fuckYou){
+      cout << playerNames[i] << "'s final score: " << playerTotal[i] << endl;
+    }
+    
+    if(i < numberOfPlayers){
+      if(playerTotal[i] > playerTotal[i+1] && playerTotal[i] > currentHigh){
+        //cout << playerTotal[i] << " > " << playerTotal[i+1] << endl;
+        currentHigh = playerTotal[i];
+        winningPlayer = playerNames[i];
+      }
+    }
   }
+  if(!fuckYou){
+    cout << winningPlayer << " Won!" << endl;
+  }
+  
+
 
  
  
